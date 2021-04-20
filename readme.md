@@ -19,3 +19,5 @@ bin\windows\kafka-console-producer.bat --topic webSocket --bootstrap-server loca
 
 # read topic
 bin\windows\kafka-console-consumer.bat --topic webSocket --from-beginning --bootstrap-server localhost:9092
+
+![alt](https://github.com/HamimSazadah/Kafka-Nodejs-WebSocket/blob/master/ss.jpg)
