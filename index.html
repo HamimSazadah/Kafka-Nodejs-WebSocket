@@ -1,0 +1,67 @@
+<html>
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script> -->
+	<script src="https://www.chartjs.org/dist/2.8.0/Chart.bundle.js"></script>
+    <!-- <script type="text/javascript" src="index.js"></script> -->
+</head>
+
+<body>
+<div style="width:400px;height:400px">
+<canvas id="myChart"></canvas>
+</div>
+    
+</body>
+<script>
+    $(document).ready(function () {
+        var count = 10;
+        var data = {
+            labels: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+            datasets: [
+                {
+                    fillColor: "rgba(220, 220, 220, 0.5) ",
+                    strokeColor: "rgba(220, 220, 220, 1) ",
+                    pointColor: "rgba(220, 220, 220, 1) ",
+                    pointStrokeColor: "#fff",
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                }
+            ]
+        }
+        var ctx = document.getElementById("myChart").getContext("2d");
+        var chart = new Chart(ctx, {
+			type: 'line',
+			data: data,
+			options: { animation: false }
+		});
+
+        function webSocketInvoke() {
+
+            if ("WebSocket" in window) {
+                console.log("WebSocket is supported by your Browser!");
+                var ws = new WebSocket("ws://localhost:8080/", "echo-protocol");
+
+                ws.onopen = function () {
+                    console.log("Connection created");
+                };
+
+                ws.onmessage = function (evt) {
+					chart.data.labels.push(evt.data);
+					chart.data.datasets.forEach((dataset) => {
+						dataset.data.push(evt.data);
+					});
+					chart.update();
+                };
+
+                ws.onclose = function () {
+                    console.log("Connection closed");
+                };
+            } else {
+                alert("WebSocket NOT supported by your Browser!");
+            }
+        }
+        webSocketInvoke();
+    });
+</script>
+
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "kafka-node-ws",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Hamim Sazadah",
+  "license": "ISC",
+  "dependencies": {
+    "kafka-node": "^5.0.0",
+    "websocket": "^1.0.34"
+  }
+}
